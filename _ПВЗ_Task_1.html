@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор палива (Go)</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff9a3c, #ff5e62);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: white;
+    width: 95%;
+    max-width: 1000px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: #ff5e00;
+    margin-bottom: 25px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    background: linear-gradient(90deg, #ff7b00, #ff3c00);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 25px;
+}
+
+.card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #ff5e00;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Калькулятор складу палива</h1>
+
+    <form method="POST">
+        <div class="grid">
+            <div class="input-group"><label>HP, %</label><input name="Hp" value="1.4"></div>
+            <div class="input-group"><label>CP, %</label><input name="Cp" value="70.5"></div>
+            <div class="input-group"><label>SP, %</label><input name="Sp" value="1.7"></div>
+            <div class="input-group"><label>NP, %</label><input name="Np" value="0.8"></div>
+            <div class="input-group"><label>OP, %</label><input name="Op" value="1.9"></div>
+            <div class="input-group"><label>WP, %</label><input name="Wp" value="7.0"></div>
+            <div class="input-group"><label>AP, %</label><input name="Ap" value="16.7"></div>
+        </div>
+
+        <button type="submit">Обчислити</button>
+    </form>
+
+    <div class="error">{{.Error}}</div>
+
+    {{if .Show}}
+    <div class="result">
+
+        <div class="card">
+            <h3>Коефіцієнти переходу</h3>
+            Kрс = {{printf "%.3f" .Krs}} <br>
+            Kрг = {{printf "%.3f" .Krg}}
+        </div>
+
+        <div class="card">
+            <h3>Склад сухої маси</h3>
+            Hc = {{printf "%.2f" .Hc}}% <br>
+            Cc = {{printf "%.2f" .Cc}}% <br>
+            Sc = {{printf "%.2f" .Sc}}% <br>
+            Nc = {{printf "%.3f" .Nc}}% <br>
+            Oc = {{printf "%.2f" .Oc}}% <br>
+            Ac = {{printf "%.2f" .Ac}}%
+        </div>
+
+        <div class="card">
+            <h3>Склад горючої маси</h3>
+            Hg = {{printf "%.2f" .Hg}}% <br>
+            Cg = {{printf "%.2f" .Cg}}% <br>
+            Sg = {{printf "%.2f" .Sg}}% <br>
+            Ng = {{printf "%.3f" .Ng}}% <br>
+            Og = {{printf "%.2f" .Og}}%
+        </div>
+
+        <div class="card">
+            <h3>Нижча теплота згоряння</h3>
+            Qr = {{printf "%.3f" .Qr}} МДж/кг <br>
+            Qd = {{printf "%.3f" .Qd}} МДж/кг <br>
+            Qdaf = {{printf "%.3f" .Qdaf}} МДж/кг
+        </div>
+
+    </div>
+    {{end}}
+
+</div>
+
+</body>
+</html>
